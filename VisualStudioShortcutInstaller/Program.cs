@@ -79,6 +79,20 @@ namespace VisualStudioShortcutInstaller
                 ShortcutFactory.CmdExePath,
                 $" /c \"{ShortcutFactory.DevEnvExePath}\" /clearcache && PAUSE"
                 );
+            IWshShortcut reinstalltemplates = ShortcutFactory.Create(
+                "Install VSTemplates",
+                "Reinstalls visual studio project and item templates",
+                ShortcutFactory.FileIconPath,
+                ShortcutFactory.CmdExePath,
+                $" /c \"{ShortcutFactory.DevEnvExePath}\" /installvstemplates && PAUSE"
+                );
+            IWshShortcut initializesetup = ShortcutFactory.Create(
+                "Initialize Setup",
+                "Reinitializes setup routine and scans for changes",
+                ShortcutFactory.FileIconPath,
+                ShortcutFactory.CmdExePath,
+                $" /c \"{ShortcutFactory.DevEnvExePath}\" /setup && PAUSE"
+                );
         }
     }
 }
