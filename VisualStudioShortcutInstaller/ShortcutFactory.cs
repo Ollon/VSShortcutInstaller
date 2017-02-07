@@ -1,5 +1,4 @@
 ﻿using IWshRuntimeLibrary;
-using Microsoft.VisualStudio.Setup.Configuration;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -31,7 +30,7 @@ namespace VisualStudioShortcutInstaller
                 return Path.Combine(system32Folder, "cmd.exe");
             }
         }
-        public static string DevEnvPath
+        public static string DevEnvExePath
         {
             get
             {
@@ -69,6 +68,17 @@ namespace VisualStudioShortcutInstaller
                 string installFolder = instance.InstallationPath;
                 string vsshellTemplateFolder = Path.Combine(installFolder, @"Common7\IDE\ProjectTemplates\Extensibility\1033\VSShellTemplate");
                 return Path.Combine(vsshellTemplateFolder, "VSShellTemplate.ico");
+            }
+        }
+
+        public static string FileIconPath
+        {
+            get
+            {
+                SetupInstance instance = SetupEnvironment.GetSetupInstance();
+                string installFolder = instance.InstallationPath;
+                string fileIconFolder = Path.Combine(installFolder, @"VSSDK\VisualStudioIntegration\Tools\Wizards\Templates\1033");
+                return Path.Combine(fileIconFolder, "File.ico");
             }
         }
 
