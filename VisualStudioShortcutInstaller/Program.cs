@@ -56,14 +56,14 @@ namespace VisualStudioShortcutInstaller
                 "Resets the Experimental instance (Exp) of Visual Studio.",
                 ShortcutFactory.VSShellTemplateIconPath,
                 ShortcutFactory.CmdExePath,
-                $" /c \"{ShortcutFactory.CreateExpInstancePath}\" /Reset /VSInstance=15.0_{instanceId} /RootSuffix=RoslynDev && PAUSE"
+                $" /c \"{ShortcutFactory.CreateExpInstancePath}\" /Reset /VSInstance=15.0_{instanceId} /RootSuffix=Exp && PAUSE"
                 );
             IWshShortcut resetRoslyn = ShortcutFactory.Create(
                 "Reset Roslyn",
                 "Resets the Roslyn instance (Roslyn) of Visual Studio.",
                 ShortcutFactory.VSShellTemplateIconPath,
                 ShortcutFactory.CmdExePath,
-                $" /c \"{ShortcutFactory.CreateExpInstancePath}\" /Reset /VSInstance=15.0_{instanceId} /RootSuffix=RoslynDev && PAUSE"
+                $" /c \"{ShortcutFactory.CreateExpInstancePath}\" /Reset /VSInstance=15.0_{instanceId} /RootSuffix=Roslyn && PAUSE"
                 );
             IWshShortcut resetRoslynDev = ShortcutFactory.Create(
                 "Reset RoslynDev",
