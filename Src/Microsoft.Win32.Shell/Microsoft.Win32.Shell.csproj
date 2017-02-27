@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{C3A0CA3B-830F-4B0C-8277-0F5860E1E198}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Microsoft.Win32.Shell</RootNamespace>
+    <AssemblyName>Microsoft.Win32.Shell</AssemblyName>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AssemblyVersion>15.0.0.0</AssemblyVersion>
+  </PropertyGroup>
+  <PropertyGroup>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\$(Configuration)\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' " />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' " />
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Debug.ps1">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="project.json" />
+    <Compile Include="Commands\CommandFlags.cs" />
+    <Compile Include="Commands\EXPCMDFLAGS.cs" />
+    <Compile Include="Commands\GetVerbCommand.cs" />
+    <Compile Include="Commands\IShellVerbProperties.cs" />
+    <Compile Include="Commands\NewCommandCommand.cs" />
+    <Compile Include="Commands\NewContextMenuCommand.cs" />
+    <Compile Include="Commands\NewVerbCommand.cs" />
+    <Compile Include="Commands\RegistryHelper.cs" />
+    <Compile Include="Commands\ShellCommand.cs" />
+    <Compile Include="Commands\ShellVerb.cs" />
+    <Compile Include="Commands\ShellVerbProperties.cs" />
+    <Compile Include="Delegate1.cs" />
+    <Compile Include="Model\ContextMenu.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <RootModule>$(OutputPath)$(AssemblyName).dll</RootModule>
+    <ModuleFolder>$(OutputPath)$(AssemblyName)\</ModuleFolder>
+    <DataFile>$(ModuleFolder)$(AssemblyName).psd1</DataFile>
+    <PowerShellLaunchCommandLine>PowerShell.exe -NoExit -NoLogo -Command 'Import-Module .\$(AssemblyName) -Force -Verbose'</PowerShellLaunchCommandLine>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartAction>Program</StartAction>
+    <StartProgram>$(SystemRoot)\System32\WindowsPowerShell\v1.0\PowerShell.exe</StartProgram>
+    <StartArguments>$(PowerShellLaunchCommandLine)</StartArguments>
+  </PropertyGroup>
+  <Target Name="AfterBuild">
+    <ItemGroup>
+      <Dependencies Include="$(OutputPath)*.dll" />
+      <Dependencies Include="$(OutputPath)*.ps1xml" />
+    </ItemGroup>
+    <ItemGroup>
+      <PowerShellModuleDataLine Include="@{" />
+      <PowerShellModuleDataLine Include="    RootModule = '$(AssemblyName).dll'" />
+      <PowerShellModuleDataLine Include="    ModuleVersion = '$(AssemblyVersion)'" />
+      <PowerShellModuleDataLine Include="    GUID = '$(ProjectGuid)'" />
+      <PowerShellModuleDataLine Include="    Author = 'Brad R. Marshall'" />
+      <PowerShellModuleDataLine Include="    CompanyName = '$(Company)'" />
+      <PowerShellModuleDataLine Include="    Copyright = '$(Copyright)'" />
+      <PowerShellModuleDataLine Include="    DefaultCommandPrefix = 'Shell'" />
+      <PowerShellModuleDataLine Include="    CmdletsToExport = '%2A'" />
+      <PowerShellModuleDataLine Include="    AliasesToExport = '%2A'" />
+      <PowerShellModuleDataLine Include="}" />
+    </ItemGroup>
+    <RemoveDir Directories="$(ModuleFolder)" />
+    <MakeDir Directories="$(ModuleFolder)" />
+    <Copy SourceFiles="$(RootModule)" DestinationFolder="$(ModuleFolder)" />
+    <Copy SourceFiles="@(Dependencies)" DestinationFolder="$(ModuleFolder)" />
+    <WriteLinesToFile Lines="@(PowerShellModuleDataLine)" File="$(DataFile)" />
+  </Target>
+</Project>
