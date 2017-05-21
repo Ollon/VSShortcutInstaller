@@ -25,10 +25,10 @@ namespace Microsoft.Win32.Shell
             Command = command;
         }
 
-        public string KeyName { get; private set; }
-        public string MUIVerb { get; private set; }
-        public CommandFlags CommandFlags { get; private set; }
-        public string Command { get; private set; }
+        public string KeyName { get; }
+        public string MUIVerb { get; }
+        public CommandFlags CommandFlags { get; }
+        public string Command { get; }
 
         public override string ToString()
         {
