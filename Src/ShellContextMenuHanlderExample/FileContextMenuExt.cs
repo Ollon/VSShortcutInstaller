@@ -74,7 +74,7 @@ public class FileContextMenuExt : IShellExtInit, IContextMenu
     {
         try
         {
-            ShellExtReg.RegisterShellExtContextMenuHandler(t.GUID, ".props",
+            ShellExtReg.RegisterShellExtContextMenuHandler(t.GUID, ".cs",
                 "CSShellExtContextMenuHandler.FileContextMenuExt Class");
         }
         catch (Exception ex)
