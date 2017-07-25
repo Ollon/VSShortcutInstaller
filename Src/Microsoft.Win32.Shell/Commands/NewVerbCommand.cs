@@ -28,7 +28,9 @@ namespace Microsoft.Win32.Shell.Commands
         protected override void ProcessRecord()
         {
             if (string.IsNullOrEmpty(MUIVerb))
+            {
                 MUIVerb = VerbName;
+            }
 
             RegistryKey key = null;
             if (Force)
@@ -47,7 +49,9 @@ namespace Microsoft.Win32.Shell.Commands
             key.SetValue("MUIVerb", MUIVerb);
 
             if (!string.IsNullOrEmpty(Icon))
+            {
                 key.SetValue("Icon", Icon);
+            }
 
             if (!string.IsNullOrEmpty(Command))
             {

@@ -71,6 +71,17 @@ namespace VisualStudioShortcutInstaller
             }
         }
 
+        public static string ItemTemplateIconPath
+        {
+            get
+            {
+                SetupInstance instance = SetupEnvironment.GetSetupInstance();
+                string installFolder = instance.InstallationPath;
+                string itemTemplateFolder = Path.Combine(installFolder, @"Common7\IDE\ProjectTemplates\CSharp\Extensibility\1033\ItemTemplate");
+                return Path.Combine(itemTemplateFolder, "ItemTemplate.ico");
+            }
+        }
+
         public static string FileIconPath
         {
             get
@@ -108,10 +119,16 @@ namespace VisualStudioShortcutInstaller
             string desktopDirectory = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
             string visualStudioDirectory = Path.Combine(desktopDirectory, "VisualStudio");
             if (!Directory.Exists(visualStudioDirectory))
+            {
                 Directory.CreateDirectory(visualStudioDirectory);
+            }
+
             string path = string.Format(@"{0}\{1}.lnk", visualStudioDirectory, name);
             if (System.IO.File.Exists(path))
+            {
                 System.IO.File.Delete(path);
+            }
+
             return path;
         }
 

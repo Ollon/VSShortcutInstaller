@@ -50,9 +50,13 @@ namespace Microsoft.Win32.Shell
                 ShellVerb verb = RegistryHelper.GetShellVerb(value);
 
                 if (Properties)
+                {
                     WriteObject(verb.Properties);
+                }
                 else
+                {
                     WriteObject(verb);
+                }
             }
             else
             {

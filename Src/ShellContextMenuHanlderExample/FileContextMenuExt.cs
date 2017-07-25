@@ -46,15 +46,15 @@ public class FileContextMenuExt : IShellExtInit, IContextMenu
         // Load the bitmap for the menu item.
         Bitmap bmp = Resources.OK;
         bmp.MakeTransparent(bmp.GetPixel(0, 0));
-        this.menuBmp = bmp.GetHbitmap();
+        menuBmp = bmp.GetHbitmap();
     }
 
     ~FileContextMenuExt()
     {
-        if (this.menuBmp != IntPtr.Zero)
+        if (menuBmp != IntPtr.Zero)
         {
-            NativeMethods.DeleteObject(this.menuBmp);
-            this.menuBmp = IntPtr.Zero;
+            NativeMethods.DeleteObject(menuBmp);
+            menuBmp = IntPtr.Zero;
         }
     }
 
@@ -62,7 +62,7 @@ public class FileContextMenuExt : IShellExtInit, IContextMenu
     void OnVerbDisplayFileName(IntPtr hWnd)
     {
         System.Windows.Forms.MessageBox.Show(
-            "The selected file is \r\n\r\n" + this.selectedFile,
+            "The selected file is \r\n\r\n" + selectedFile,
             "CSShellExtContextMenuHandler");
     }
 
@@ -147,7 +147,7 @@ public class FileContextMenuExt : IShellExtInit, IContextMenu
             }
 
             // Determine how many files are involved in this operation.
-            uint nFiles = NativeMethods.DragQueryFile(hDrop, UInt32.MaxValue, null, 0);
+            uint nFiles = NativeMethods.DragQueryFile(hDrop, uint.MaxValue, null, 0);
 
             // This code sample displays the custom context menu item when only 
             // one file is selected. 
@@ -160,7 +160,7 @@ public class FileContextMenuExt : IShellExtInit, IContextMenu
                 {
                     Marshal.ThrowExceptionForHR(WinError.E_FAIL);
                 }
-                this.selectedFile = fileName.ToString();
+                selectedFile = fileName.ToString();
             }
             else
             {
@@ -249,9 +249,9 @@ public class FileContextMenuExt : IShellExtInit, IContextMenu
             MIIM.MIIM_ID | MIIM.MIIM_STATE;
         mii.wID = idCmdFirst + IDM_DISPLAY;
         mii.fType = MFT.MFT_STRING;
-        mii.dwTypeData = this.menuText;
+        mii.dwTypeData = menuText;
         mii.fState = MFS.MFS_ENABLED;
-        mii.hbmpItem = this.menuBmp;
+        mii.hbmpItem = menuBmp;
         if (!NativeMethods.InsertMenuItem(hMenu, iMenu, true, ref mii))
         {
             return Marshal.GetHRForLastWin32Error();
@@ -320,7 +320,7 @@ public class FileContextMenuExt : IShellExtInit, IContextMenu
         if (!isUnicode && NativeMethods.HighWord(ici.verb.ToInt32()) != 0)
         {
             // Is the verb supported by this context menu extension?
-            if (Marshal.PtrToStringAnsi(ici.verb) == this.verb)
+            if (Marshal.PtrToStringAnsi(ici.verb) == verb)
             {
                 OnVerbDisplayFileName(ici.hwnd);
             }
@@ -338,7 +338,7 @@ public class FileContextMenuExt : IShellExtInit, IContextMenu
         else if (isUnicode && NativeMethods.HighWord(iciex.verbW.ToInt32()) != 0)
         {
             // Is the verb supported by this context menu extension?
-            if (Marshal.PtrToStringUni(iciex.verbW) == this.verb)
+            if (Marshal.PtrToStringUni(iciex.verbW) == verb)
             {
                 OnVerbDisplayFileName(ici.hwnd);
             }
@@ -401,26 +401,26 @@ public class FileContextMenuExt : IShellExtInit, IContextMenu
             switch ((GCS)uFlags)
             {
                 case GCS.GCS_VERBW:
-                    if (this.verbCanonicalName.Length > cchMax - 1)
+                    if (verbCanonicalName.Length > cchMax - 1)
                     {
                         Marshal.ThrowExceptionForHR(WinError.STRSAFE_E_INSUFFICIENT_BUFFER);
                     }
                     else
                     {
                         pszName.Clear();
-                        pszName.Append(this.verbCanonicalName);
+                        pszName.Append(verbCanonicalName);
                     }
                     break;
 
                 case GCS.GCS_HELPTEXTW:
-                    if (this.verbHelpText.Length > cchMax - 1)
+                    if (verbHelpText.Length > cchMax - 1)
                     {
                         Marshal.ThrowExceptionForHR(WinError.STRSAFE_E_INSUFFICIENT_BUFFER);
                     }
                     else
                     {
                         pszName.Clear();
-                        pszName.Append(this.verbHelpText);
+                        pszName.Append(verbHelpText);
                     }
                     break;
             }

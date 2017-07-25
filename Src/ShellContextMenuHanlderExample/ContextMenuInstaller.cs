@@ -27,7 +27,7 @@ namespace ShellContextMenuHanlderExample
             // the current managed assembly to enable creation from COM.
             RegistrationServices regService = new RegistrationServices();
             regService.RegisterAssembly(
-                this.GetType().Assembly,
+                GetType().Assembly,
                 AssemblyRegistrationFlags.SetCodeBase);
         }
 
@@ -38,7 +38,7 @@ namespace ShellContextMenuHanlderExample
             // Call RegistrationServices.UnregisterAssembly to unregister the classes 
             // in the current managed assembly.
             RegistrationServices regService = new RegistrationServices();
-            regService.UnregisterAssembly(this.GetType().Assembly);
+            regService.UnregisterAssembly(GetType().Assembly);
         }
     }
 }

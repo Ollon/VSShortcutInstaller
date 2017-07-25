@@ -52,7 +52,9 @@ namespace Microsoft.Win32.Shell
             foreach (ShellVerb shellVerb in GetShellVerbs())
             {
                 if (shellVerb.Name == name)
+                {
                     verb = shellVerb;
+                }
             }
 
             return verb;
