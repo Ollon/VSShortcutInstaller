@@ -37,6 +37,13 @@ namespace VisualStudioShortcutInstaller
                 ShortcutFactory.DevEnvExePath,
                 "/RootSuffix RoslynDev"
                );
+            IWshShortcut startprojectsystem = ShortcutFactory.Create(
+                "Start ProjectSystem",
+                "Starts the Project System Developer experimental instance of Visual Studio",
+                ShortcutFactory.DevEnvExePath,
+                ShortcutFactory.DevEnvExePath,
+                "/RootSuffix ProjectSystem"
+               );
             IWshShortcut vsdevcmd = ShortcutFactory.Create(
                 "Developer Command Prompt",
                 "Visual Studio Developer Command Prompt",
@@ -71,6 +78,13 @@ namespace VisualStudioShortcutInstaller
                 ShortcutFactory.ItemTemplateIconPath,
                 ShortcutFactory.CmdExePath,
                 $" /c \"{ShortcutFactory.CreateExpInstancePath}\" /Reset /VSInstance=15.0_{instanceId} /RootSuffix=RoslynDev && PAUSE"
+                );
+            IWshShortcut resetProjectSystem = ShortcutFactory.Create(
+                "Reset ProjectSystem",
+                "Resets the ProjectSystem instance (ProjectSystem) of Visual Studio.",
+                ShortcutFactory.ItemTemplateIconPath,
+                ShortcutFactory.CmdExePath,
+                $" /c \"{ShortcutFactory.CreateExpInstancePath}\" /Reset /VSInstance=15.0_{instanceId} /RootSuffix=ProjectSystem && PAUSE"
                 );
             IWshShortcut clearcache = ShortcutFactory.Create(
                 "Clear Component Cache",
